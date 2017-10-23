@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fu.alfie.com.cameraviewexdemo.MainActivity">
+    tools:context="fu.alfie.com.cameraviewexdemo.CameraSurfaceViewActivity">
 
     <FrameLayout
         android:id="@+id/preview1"
@@ -24,9 +24,9 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="187dp"
+        android:layout_marginBottom="76dp"
         android:text="Button"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/imageView1"
         android:layout_centerHorizontal="true" />
 
     <ImageView

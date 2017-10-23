@@ -7,14 +7,13 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class CameraSurfaceViewActivity extends AppCompatActivity {
     private FrameLayout preview;
     private Camera mCamera;
     private CameraView cameraView;
@@ -23,11 +22,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera_surfaceview);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mCamera = getCameraInstance();
         mCamera.setDisplayOrientation(90);
+        Camera.Parameters parameters = mCamera.getParameters();
+        parameters.setRecordingHint(false);
+        mCamera.setParameters(parameters);
         preview = (FrameLayout) findViewById(R.id.preview1);
         imageView = (ImageView) findViewById(R.id.imageView1);
         cameraView = new CameraView(this, mCamera);
@@ -60,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             if(bitmap==null){
-                Toast.makeText(MainActivity.this, "Captured image is empty", Toast.LENGTH_LONG).show();
+                Toast.makeText(CameraSurfaceViewActivity.this, "Captured image is empty", Toast.LENGTH_LONG).show();
                 return;
             }
             Matrix mtx = new Matrix();
             mtx.postRotate(90);
-            imageView.setImageBitmap(scaleDownBitmapImage(bitmap, 300, 200 ));
+            imageView.setImageBitmap(scaleDownBitmapImage(bitmap, 600, 400 ));
         }
     };
 
