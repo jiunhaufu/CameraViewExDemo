@@ -53,8 +53,8 @@ public class Viewport extends ViewGroup {
         eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         float width = (float) getWidth() - viewportMargin;
         float height =  width * (float) 0.7;
-        RectF rect = new RectF((float)viewportMargin, (float)viewportMargin, width, height);
-        RectF frame = new RectF((float)viewportMargin-2, (float)viewportMargin-2, width+4, height+4);
+        RectF rect = new RectF((float)viewportMargin, height/2-(float)viewportMargin, width, height+height/2);
+        RectF frame = new RectF((float)viewportMargin-2, height/2-(float)viewportMargin-2, width+4, height+4+height/2);
         Path path = new Path();
         Paint stroke = new Paint();
         stroke.setAntiAlias(true);
