@@ -79,5 +79,10 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
         return rotatedBitmap;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCamera.stopPreview();
+        mCamera.release();
+    }
 }
