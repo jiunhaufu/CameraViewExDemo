@@ -8,7 +8,9 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.provider.Settings;
@@ -30,6 +32,7 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
@@ -175,6 +178,7 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
             hints.put(DecodeHintType.POSSIBLE_FORMATS, BarcodeFormat.QR_CODE);
             hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
             Result result = new QRCodeReader().decode(binaryBitmap, hints);
+            result.getResultPoints();
 
             return result.toString();
         } catch (Exception e) {
@@ -195,6 +199,42 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
         //分析QRcode測試
         Toast.makeText(CameraSurfaceViewActivity.this, decode(rotatedBitmap), Toast.LENGTH_LONG).show();
         return rotatedBitmap;
+    }
+
+    private void drawResultPoints(Bitmap barcode, float scaleFactor, Result rawResult) {
+        ResultPoint[] points = rawResult.getResultPoints();
+        if (points != null && points.length > 0) {
+            Canvas canvas = new Canvas(barcode);
+            Paint paint = new Paint();
+//            paint.setColor(getResources().getColor(R.color.result_points));
+            if (points.length == 2) {
+                paint.setStrokeWidth(4.0f);
+                drawLine(canvas, paint, points[0], points[1], scaleFactor);
+            } else if (points.length == 4 &&
+                    (rawResult.getBarcodeFormat() == BarcodeFormat.UPC_A ||
+                            rawResult.getBarcodeFormat() == BarcodeFormat.EAN_13)) {
+                // Hacky special case -- draw two lines, for the barcode and metadata
+                drawLine(canvas, paint, points[0], points[1], scaleFactor);
+                drawLine(canvas, paint, points[2], points[3], scaleFactor);
+            } else {
+                paint.setStrokeWidth(10.0f);
+                for (ResultPoint point : points) {
+                    if (point != null) {
+                        canvas.drawPoint(scaleFactor * point.getX(), scaleFactor * point.getY(), paint);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void drawLine(Canvas canvas, Paint paint, ResultPoint a, ResultPoint b, float scaleFactor) {
+        if (a != null && b != null) {
+            canvas.drawLine(scaleFactor * a.getX(),
+                    scaleFactor * a.getY(),
+                    scaleFactor * b.getX(),
+                    scaleFactor * b.getY(),
+                    paint);
+        }
     }
 
     @Override
