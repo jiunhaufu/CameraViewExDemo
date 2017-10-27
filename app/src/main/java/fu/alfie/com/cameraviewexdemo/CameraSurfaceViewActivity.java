@@ -123,8 +123,8 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
         mCamera = getCameraInstance();
         mCamera.setDisplayOrientation(90);
         Camera.Parameters parameters = mCamera.getParameters();
-        parameters.setRecordingHint(false);
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        parameters.setRecordingHint(true);
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         mCamera.setParameters(parameters);
         mCamera.startPreview();
         cameraView = new CameraView(this, mCamera);
@@ -141,7 +141,6 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
                     return;
                 }
                 createImage(bitmap);
-                Toast.makeText(CameraSurfaceViewActivity.this, decode(bitmap), Toast.LENGTH_LONG).show();
                 mCamera.startPreview();
             }
         });
@@ -189,8 +188,12 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, newHeight, newWidth, true);
         Matrix mtx = new Matrix();
         mtx.postRotate(90);
+        //截圖視窗
         Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBitmap, (newWidth-16)/10*7/2-8, 16, (newWidth-16)/10*7+8, newWidth-16-16, mtx, true);
+        //
 //        Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBitmap, 0, 0, newHeight, newWidth, mtx, true);
+        //分析QRcode測試
+        Toast.makeText(CameraSurfaceViewActivity.this, decode(rotatedBitmap), Toast.LENGTH_LONG).show();
         return rotatedBitmap;
     }
 

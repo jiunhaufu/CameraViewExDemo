@@ -41,6 +41,14 @@ public class CameraView extends SurfaceView {
 
         public void surfaceChanged(SurfaceHolder surface, int format, int width, int height) {
             // Ignored, Camera does all the work for us
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean b, Camera camera) {
+                    if(b){
+                        camera.cancelAutoFocus();//只有加上了這一句，才會自動對焦。
+                    }
+                }
+            });
         }
 
         public void surfaceDestroyed(SurfaceHolder surface) {
