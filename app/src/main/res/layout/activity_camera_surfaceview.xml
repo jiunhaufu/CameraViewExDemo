@@ -9,23 +9,22 @@
     <FrameLayout
         android:id="@+id/preview1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="match_parent"></FrameLayout>
 
     <!-- use the view to get the viewport -->
     <fu.alfie.com.cameraviewexdemo.Viewport
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".5"
-        android:background="#7f000000">
-    </fu.alfie.com.cameraviewexdemo.Viewport>
+        android:background="#7f000000"></fu.alfie.com.cameraviewexdemo.Viewport>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
-        android:text="Button"
+        android:layout_marginBottom="17dp"
+        android:onClick="onTakePictureClick"
+        android:text="拍照"
         android:layout_above="@+id/imageView1"
         android:layout_centerHorizontal="true" />
 
@@ -34,7 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
-        android:layout_marginBottom="75dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
