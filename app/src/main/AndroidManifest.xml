@@ -3,6 +3,7 @@
     package="fu.alfie.com.cameraviewexdemo">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -20,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraSurfaceViewActivity"></activity>
+        <activity android:name=".CameraSurfaceViewActivity" />
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>
