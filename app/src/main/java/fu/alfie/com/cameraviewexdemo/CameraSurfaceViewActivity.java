@@ -1,7 +1,6 @@
 package fu.alfie.com.cameraviewexdemo;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -9,20 +8,20 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -145,8 +144,10 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
                 }
                 createImage(bitmap);
                 mCamera.startPreview();
+                //拍照將無法再執行自動對焦
             }
         });
+
     }
 
     public static Camera getCameraInstance(){
@@ -178,8 +179,7 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
             hints.put(DecodeHintType.POSSIBLE_FORMATS, BarcodeFormat.QR_CODE);
             hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
             Result result = new QRCodeReader().decode(binaryBitmap, hints);
-            result.getResultPoints();
-
+            drawResultPoints(bitmap, 1, result);
             return result.toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,8 +194,8 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
         mtx.postRotate(90);
         //截圖視窗
         Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBitmap, (newWidth-16)/10*7/2-8, 16, (newWidth-16)/10*7+8, newWidth-16-16, mtx, true);
-        //
-//        Bitmap rotatedBitmap = Bitmap.createBitmap(resizedBitmap, 0, 0, newHeight, newWidth, mtx, true);
+        //原始比例 1/2視窗
+//        Bitmap rotatedBitmap = Bitmap.createBitmap(resedBitmap, 0, 0, newHeight, newWidth, mtx, true);
         //分析QRcode測試
         Toast.makeText(CameraSurfaceViewActivity.this, decode(rotatedBitmap), Toast.LENGTH_LONG).show();
         return rotatedBitmap;
@@ -206,7 +206,7 @@ public class CameraSurfaceViewActivity extends AppCompatActivity {
         if (points != null && points.length > 0) {
             Canvas canvas = new Canvas(barcode);
             Paint paint = new Paint();
-//            paint.setColor(getResources().getColor(R.color.result_points));
+            paint.setColor(Color.GREEN);
             if (points.length == 2) {
                 paint.setStrokeWidth(4.0f);
                 drawLine(canvas, paint, points[0], points[1], scaleFactor);
