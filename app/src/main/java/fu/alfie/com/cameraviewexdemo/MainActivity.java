@@ -16,4 +16,8 @@ public class MainActivity extends AppCompatActivity {
     public void onCameraSurfaceViewClick(View view){
         startActivity(new Intent(this,CameraSurfaceViewActivity.class));
     }
+
+    public void onCamera2SurfaceViewClick(View view){
+        startActivity(new Intent(this,Camera2SurfaceViewActivity.class));
+    }
 }

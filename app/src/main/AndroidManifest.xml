@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CameraSurfaceViewActivity" />
-        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".Camera2SurfaceViewActivity"></activity>
     </application>
 
 </manifest>
