@@ -18,22 +18,14 @@
         android:layout_weight=".5"
         android:background="#7f000000"></fu.alfie.com.cameraviewexdemo.Viewport>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:onClick="onTakePictureClick"
-        android:text="拍照"
-        android:layout_above="@+id/imageView1"
-        android:layout_centerHorizontal="true" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:onClick="onTakePictureClick"
+        app:srcCompat="@drawable/ic_lens_black_24dp" />
 
 </RelativeLayout>
